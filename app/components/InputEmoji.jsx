@@ -5,12 +5,6 @@ import Picker from "emoji-picker-react";
 
 
 const Input = () => {
-
-  const message=[{
-    reactions:" "
-  }];
-
-
   const [text, setText] = useState("");
   const [showReaction, setShowReaction] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState([]);
@@ -21,10 +15,9 @@ const Input = () => {
 
   const handleReaction = (clickedEmoji, event) => {
   setSelectedEmoji(clickedEmoji);
-  console.log(selectedEmoji);
+  setShowReaction(false);
   };
 
- 
 
 
   return (
@@ -48,7 +41,11 @@ const Input = () => {
 
       {/* Picker */}
       <div className="flex">
-        <div className=" w-96 h-20 rounded-full border-2"></div>
+        <div className=" w-96 h-20 rounded-full border-2">
+        <p className="placement-end">
+          {selectedEmoji.emoji}
+        </p>
+        </div>
         <button type="button" onClick={toggledSuggestedReact}>
           <FaRegSmile size={25} />
         </button>
@@ -59,9 +56,6 @@ const Input = () => {
             emojiStyle="native"
           />
         )}
-        <p>
-          {selectedEmoji.length}
-        </p>
       </div>
     </div>
   );
