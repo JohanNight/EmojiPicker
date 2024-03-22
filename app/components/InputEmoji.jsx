@@ -1,13 +1,21 @@
+"use client";
+import Image from "next/image";
 import React, { useState } from "react";
 import Emoji from "react-input-emoji";
 import { FaRegSmile } from "react-icons/fa";
 import Picker from "emoji-picker-react";
 
-
 const Input = () => {
+
+  const message=[{
+    reactions:" "
+  }];
+
+
   const [text, setText] = useState("");
-  const [showReaction, setShowReaction] = useState(false);
-  const [selectedEmoji, setSelectedEmoji] = useState([]);
+  const [showReaction, setShowReaction] = useState(true);
+  const [selectedReaction, setSelectedReaction] = useState(null);
+  const [reactions, setReactions] = useState([]);
 
   const toggledSuggestedReact = () => {
     setShowReaction(!showReaction);
@@ -15,9 +23,10 @@ const Input = () => {
 
   const handleReaction = (clickedEmoji, event) => {
   setSelectedEmoji(clickedEmoji);
-  setShowReaction(false);
+  console.log(selectedEmoji);
   };
 
+ 
 
 
   return (
@@ -52,10 +61,14 @@ const Input = () => {
         {showReaction && (
           <Picker
             reactionsDefaultOpen={true}
-            onReactionClick={handleReaction}
+            // onReactionClick={handleReaction}
+            onEmojiClick={(emojiData) => handleReaction(emojiData)}
             emojiStyle="native"
           />
         )}
+        <p>
+          {selectedEmoji.length}
+        </p>
       </div>
     </div>
   );
