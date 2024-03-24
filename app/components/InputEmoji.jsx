@@ -7,13 +7,8 @@ import Picker from "emoji-picker-react";
 
 const Input = () => {
 
-  const message=[{
-    reactions:" "
-  }];
-
-
   const [text, setText] = useState("");
-  const [showReaction, setShowReaction] = useState(true);
+  const [showReaction, setShowReaction] = useState(false);
   const [selectedReaction, setSelectedReaction] = useState(null);
   const [reactions, setReactions] = useState([]);
 
@@ -21,13 +16,12 @@ const Input = () => {
     setShowReaction(!showReaction);
   };
 
-  const handleReaction = (clickedEmoji, event) => {
-  setSelectedEmoji(clickedEmoji);
-  console.log(selectedEmoji);
+  const handleReaction = (clickedEmoji,event) => {
+    setSelectedReaction(clickedEmoji);
+    setReactions([...reactions, clickedEmoji]);
+    setShowReaction(false);
+    console.log(event);
   };
-
- 
-
 
   return (
     <div className="bg-white w-full h-screen">
@@ -51,9 +45,6 @@ const Input = () => {
       {/* Picker */}
       <div className="flex">
         <div className=" w-96 h-20 rounded-full border-2">
-        <p className="placement-end">
-          {selectedEmoji.emoji}
-        </p>
         </div>
         <button type="button" onClick={toggledSuggestedReact}>
           <FaRegSmile size={25} />
@@ -61,15 +52,31 @@ const Input = () => {
         {showReaction && (
           <Picker
             reactionsDefaultOpen={true}
-            // onReactionClick={handleReaction}
+            //onReactionClick={(emojiData,eventEmoji) => handleReaction(emojiData,eventEmoji)}
             onEmojiClick={(emojiData) => handleReaction(emojiData)}
             emojiStyle="native"
           />
         )}
-        <p>
-          {selectedEmoji.length}
-        </p>
+        <br />
+        {selectedReaction && (
+          <div>
+            <Image
+              src={selectedReaction.imageUrl}
+              width={10}
+              height={10}
+              alt="emoji"
+            />
+            <p>{selectedReaction.emoji}</p>
+          </div>
+        )}
       </div>
+      {reactions.map((reaction) => {
+        <>
+          <p>
+            {reaction.emoji}
+          </p>
+        </>
+      })}
     </div>
   );
 };
